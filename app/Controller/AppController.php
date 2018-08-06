@@ -63,7 +63,7 @@ class AppController extends Controller {
      * - pages-ace
      * - londiniumv
      */
-    var $template = "londium";
+    var $template = "londiniumv";
     var $frontTemplate = "stn_default";
     var $statusCode = array(
         101 => "Harap mengisi kembali data yang salah dibawah",
