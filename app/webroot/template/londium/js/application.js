@@ -15,203 +15,212 @@
 
 $(function () {
 
-
+    moment.locale("id");
+    $.datetimepicker.setLocale("id");
 
     /* # Data tables
      ================================================== */
-    /* # Data tables
-     ================================================== */
-    //==== Pagination Table ====//
-    oTable = $('.datatable-pagination table').DataTable({
-        "paging": false,
-        "info": false,
-        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-        "oLanguage": {
-            "sSearch": "<span>Filter:</span> _INPUT_",
-        }
-    });
-
-    $(".datatable-footer").html($("#footer-pagination").html());
-    $("#footer-pagination").remove();
-
-    //===== Adding placeholder to Datatable filter input field =====//
-
-    $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-
-
-
-
-    //===== Setting Datatable defaults =====//
-
-    $.extend($.fn.dataTable.defaults, {
-        autoWidth: false,
-        pagingType: 'full_numbers',
-        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-        language: {
-            search: '<span>Filter:</span> _INPUT_',
-            lengthMenu: '<span>Show:</span> _MENU_',
-            paginate: {'first': 'First', 'last': 'Last', 'next': '>', 'previous': '<'}
-        }
-    });
-
 
 
     //===== Default datatable =====//
 
-    $('.datatable table').dataTable();
-
-
-
-    //===== Datatable with pager =====//
-
-    $('.datatable-pager table').dataTable({
-        pagingType: 'simple',
-        language: {
-            paginate: {'next': 'Next →', 'previous': '← Previous'}
+    oTable = $('.datatable table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show entries:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
         }
     });
 
 
+    //===== Table with selectable rows =====//
 
-    //===== Media datatable =====//
-
-    $('.datatable-media table').dataTable({
-        columnDefs: [{
-                orderable: false,
-                targets: [0]
-            }],
-        order: [[1, 'asc']]
-    });
-
-
-
-    //===== Custom sort columns =====//
-
-    $('.datatable-custom-sort table').dataTable({
-        columnDefs: [{
-                orderable: false,
-                targets: [0, 2]
-            }],
-        order: [[1, 'asc']]
-    });
-
-
-
-    //===== Invoices datatable =====//
-
-    $('.datatable-invoices table').dataTable({
-        columnDefs: [{
-                orderable: false,
-                targets: [1, 6]
-            }],
-        order: [[0, 'desc']]
-    });
-
-
-
-    //===== Tasks datatable =====//
-
-    $('.datatable-tasks table').dataTable({
-        columnDefs: [{
-                orderable: false,
-                targets: [5]
-            }]
-    });
-
-
-
-    //===== Saving state =====//
-
-    $('.datatable-ajax-source table').dataTable({
-        ajax: 'media/datatable_ajax_source.txt'
-    });
-
-
-
-    //===== Saving state =====//
-
-    $('.datatable-state-saving table').dataTable({
-        stateSave: true
-    });
-
-
-
-    //===== Datatable with selectable rows =====//
-
-    $('.datatable-selectable table').dataTable({
-        dom: '<"datatable-header"Tfl>t<"datatable-footer"ip>',
-        tableTools: {
-            sRowSelect: 'multi',
-            aButtons:
-                    [{
-                            sExtends: 'collection',
-                            sButtonText: 'Tools <span class="caret"></span>',
-                            sButtonClass: 'btn btn-primary',
-                            aButtons: ['select_all', 'select_none']
-                        }]
+    oTable = $('.datatable-selectable table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"Tfl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "oTableTools": {
+            "sRowSelect": "multi",
+            "aButtons":
+                    [
+                        {
+                            "sExtends": "collection",
+                            "sButtonText": "Tools <span class='caret'></span>",
+                            "sButtonClass": "btn btn-primary",
+                            "aButtons": ["select_all", "select_none"]
+                        }
+                    ]
         }
     });
 
 
+    //===== Table with media elements =====//
 
-    //===== Datatable with tools =====//
+    oTable = $('.datatable-media table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [0, 4]}
+        ]
+    });
 
-    $('.datatable-tools table').dataTable({
-        dom: '<"datatable-header"Tfl>t<"datatable-footer"ip>',
-        tableTools: {
-            sRowSelect: "single",
-            sSwfPath: "media/swf/copy_csv_xls_pdf.swf",
-            aButtons: [
+
+    //===== Table with pager =====//
+
+    oTable = $('.datatable-pager table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "two_button",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show entries:</span> _MENU_",
+            "oPaginate": {"sNext": "Next →", "sPrevious": "← Previous"}
+        }
+    });
+
+
+    //===== Table with tools =====//
+
+    oTable = $('.datatable-tools table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"Tfl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "oTableTools": {
+            "sRowSelect": "single",
+            "sSwfPath": "media/swf/copy_csv_xls_pdf.swf",
+            "aButtons": [
                 {
-                    sExtends: 'copy',
-                    sButtonText: 'Copy',
-                    sButtonClass: 'btn btn-default'
+                    "sExtends": "copy",
+                    "sButtonText": "Copy",
+                    "sButtonClass": "btn"
                 },
                 {
-                    sExtends: 'print',
-                    sButtonText: 'Print',
-                    sButtonClass: 'btn btn-default'
+                    "sExtends": "print",
+                    "sButtonText": "Print",
+                    "sButtonClass": "btn"
                 },
                 {
-                    sExtends: 'collection',
-                    sButtonText: 'Save <span class="caret"></span>',
-                    sButtonClass: 'btn btn-primary',
-                    aButtons: ['csv', 'xls', 'pdf']
+                    "sExtends": "collection",
+                    "sButtonText": "Save <span class='caret'></span>",
+                    "sButtonClass": "btn btn-primary",
+                    "aButtons": ["csv", "xls", "pdf"]
                 }
             ]
         }
     });
 
 
+    //===== Table with custom sorting columns =====//
 
-    //===== Datatable with custom column filtering =====//
-
-    // Setup - add a text input to each footer cell
-    $('.datatable-add-row table tfoot th').each(function () {
-        var title = $('.datatable-add-row table thead th').eq($(this).index()).text();
-        $(this).html('<input type="text" class="form-control" placeholder="Filter ' + title + '" />');
-    });
-
-    // DataTable
-    var table = $('.datatable-add-row table').DataTable();
-
-    // Apply the filter
-    $(".datatable-add-row table tfoot input").on('keyup change', function () {
-        table
-                .column($(this).parent().index() + ':visible')
-                .search(this.value)
-                .draw();
+    oTable = $('.datatable-custom-sort table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [0, 1]}
+        ]
     });
 
 
-    $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
+    //===== Table with invoices =====//
+
+    oTable = $('.datatable-invoices table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter:</span> _INPUT_",
+            "sLengthMenu": "<span>Show:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [1, 6]}
+        ],
+        "aaSorting": [[0, 'desc']]
+    });
+
+
+    //===== Table with tasks =====//
+
+    oTable = $('.datatable-tasks table').dataTable({
+        "aaSorting": [],
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter tasks:</span> _INPUT_",
+            "sLengthMenu": "<span>Show tasks:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        },
+        "aoColumnDefs": [
+            {"bSortable": false, "aTargets": [5]}
+        ]
+    });
+
+
+    //===== Datatable with tfoot column filters =====//
+
+    var asInitVals = new Array();
+    var oTable = $('.datatable-add-row table').dataTable({
+        "bJQueryUI": false,
+        "bAutoWidth": false,
+        "sPaginationType": "full_numbers",
+        "sDom": '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        "oLanguage": {
+            "sSearch": "<span>Filter all:</span> _INPUT_",
+            "sLengthMenu": "<span>Show entries:</span> _MENU_",
+            "oPaginate": {"sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<"}
+        }
+    });
+
+    $(".dataTables_wrapper tfoot input").keyup(function () {
+        oTable.fnFilter(this.value, $(".dataTables_wrapper tfoot input").index(this));
+    });
+
+
+    //===== Adding placeholder to Datatable filter input field =====//
+
+    $('.dataTables_filter input[type=text]').attr('placeholder', 'Type to filter...');
+
+
 
 
 
     /* # Select2 dropdowns 
      ================================================== */
-    $(".datatable-header").append($("#header-pagination").html());
-    $("#header-pagination").remove();
+
 
     //===== Datatable select =====//
 
@@ -239,7 +248,11 @@ $(function () {
     //===== Full width select =====//
 
     $(".select-full").select2({
-        width: "100%"
+        allowClear: true,
+        width: "100%",
+        formatNoMatches: function () {
+            return "Pencarian tidak ditemukan";
+        },
     });
 
 
@@ -434,7 +447,11 @@ $(function () {
 
     $('.multi-select-all').multiselect({
         buttonClass: 'btn btn-default',
-        includeSelectAllOption: true,
+        includeSelectAllOption: false,
+        selectAllText: 'Pilih semua',
+        selectAllValue: '',
+        nonSelectedText: 'Tidak ada yang dipilih',
+        nSelectedText: 'dipilih',
         onChange: function (element, checked) {
             $.uniform.update();
         }
@@ -447,7 +464,7 @@ $(function () {
         buttonClass: 'btn btn-default',
         onChange: function (element, checked) {
             $.uniform.update();
-            $.jGrowl('Change event invoked!', {header: 'Update', position: 'center', life: 1500});
+//            $.jGrowl('Change event invoked!', {header: 'Update', position: 'center', life: 1500});
         }
     });
 
@@ -643,9 +660,6 @@ $(function () {
 
     //===== jQuery UI Datepicker =====//
 
-    $(".datepicker").datepicker({
-        showOtherMonths: true
-    });
 
     $(".datepicker-inline").datepicker({showOtherMonths: true});
 
@@ -794,7 +808,6 @@ $(function () {
 
     //===== Form elements styling =====//
 
-    $(".styled, .multiselect-container input").uniform({radioClass: 'choice', selectAutoWidth: false});
 
 
 
@@ -876,7 +889,7 @@ $(function () {
                 }
             },
     function (start, end) {
-        $.jGrowl('Date range has been changed', {header: 'Update', position: 'center', life: 1500});
+//        $.jGrowl('A date range was changed', {header: 'Update', position: 'center', life: 1500});
         $('#reportrange .date-range').html(start.format('<i>D</i> <b><i>MMM</i> <i>YYYY</i></b>') + '<em> - </em>' + end.format('<i>D</i> <b><i>MMM</i> <i>YYYY</i></b>'));
     }
     );
@@ -1016,8 +1029,16 @@ $(function () {
 
     //===== jGrowl notifications defaults =====//
 
-    $.jGrowl.defaults.closer = false;
-    $.jGrowl.defaults.easing = 'easeInOutCirc';
+
+
+    //===== Collapsible navigation =====//
+
+    $('.sidebar-wide li:not(.disabled) .expand, .sidebar-narrow .navigation > li ul .expand').collapsible({
+        defaultOpen: 'second-level,third-level',
+        cssOpen: 'level-opened',
+        cssClose: 'level-closed',
+        speed: 150
+    });
 
 
 
@@ -1025,67 +1046,6 @@ $(function () {
 
     /* # Default Layout Options
      ================================================== */
-
-
-    //===== Wrapping content inside .page-content =====//
-
-    $('.page-content').wrapInner('<div class="page-content-inner"></div>');
-
-
-
-    //===== Applying offcanvas class =====//
-
-    $(document).on('click', '.offcanvas', function () {
-        $('body').toggleClass('offcanvas-active');
-    });
-
-
-
-    //===== Default navigation =====//
-
-    $('.navigation').find('li.active').parents('li').addClass('active');
-    $('.navigation').find('li').not('.active').has('ul').children('ul').addClass('hidden-ul');
-    $('.navigation').find('li').has('ul').children('a').parent('li').addClass('has-ul');
-
-
-    $(document).on('click', '.sidebar-toggle', function (e) {
-        e.preventDefault();
-
-        $('body').toggleClass('sidebar-narrow');
-
-        if ($('body').hasClass('sidebar-narrow')) {
-            $('.navigation').children('li').children('ul').css('display', '');
-
-            $('.sidebar-content').hide().delay().queue(function () {
-                $(this).show().addClass('animated fadeIn').clearQueue();
-            });
-        }
-
-        else {
-            $('.navigation').children('li').children('ul').css('display', 'none');
-            $('.navigation').children('li.active').children('ul').css('display', 'block');
-
-            $('.sidebar-content').hide().delay().queue(function () {
-                $(this).show().addClass('animated fadeIn').clearQueue();
-            });
-        }
-    });
-
-
-    $('.navigation').find('li').has('ul').children('a').on('click', function (e) {
-        e.preventDefault();
-
-        if ($('body').hasClass('sidebar-narrow')) {
-            $(this).parent('li > ul li').not('.disabled').toggleClass('active').children('ul').slideToggle(250);
-            $(this).parent('li > ul li').not('.disabled').siblings().removeClass('active').children('ul').slideUp(250);
-        }
-
-        else {
-            $(this).parent('li').not('.disabled').toggleClass('active').children('ul').slideToggle(250);
-            $(this).parent('li').not('.disabled').siblings().removeClass('active').children('ul').slideUp(250);
-        }
-    });
-
 
 
     //===== Panel Options (collapsing, closing) =====//
@@ -1113,7 +1073,6 @@ $(function () {
         var $panelContent = $(this).parent().parent().parent();
         $panelContent.slideUp(200).remove(200);
     });
-
 
 
     //===== Showing spinner animation demo =====//
@@ -1149,13 +1108,18 @@ $(function () {
     });
 
 
+    //===== Hiding sidebar =====//
+
+    $('.sidebar-toggle').click(function () {
+        $('.page-container').toggleClass('sidebar-hidden');
+    });
+
 
     //===== Disabling main navigation links =====//
 
-    $('.navigation .disabled a, .navbar-nav > .disabled > a').click(function (e) {
+    $('.navigation li.disabled a, .navbar-nav > .disabled > a').click(function (e) {
         e.preventDefault();
     });
-
 
 
     //===== Toggling active class in accordion groups =====//
