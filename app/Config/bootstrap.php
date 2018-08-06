@@ -96,14 +96,14 @@ define("_FRONT_TEMPLATE_DIR", "front_template");
 define("_EMPTY_IMAGE", "/img/no_image.jpg");
 
 define("_APP_VERSION","1.0.0");
-define("_APP_NAME","AppShortName");
-define("_APP_REFERENCE_NAME","Application Name");
+define("_APP_NAME","Point Of Sale");
+define("_APP_REFERENCE_NAME","Point Of Sale System");
 define("_APP_KEY","random");
 define("_APP_CORPORATE","Corporate Name");
-define("_APP_START","2016");
+define("_APP_START","2018");
 
-define("_DEVELOPER_NAME","Surya Teknologi Nusantara");
-define("_DEVELOPER_WEBSITE","http://www.suryateknologi.com/");
+define("_DEVELOPER_NAME","Takeru T.K.");
+define("_DEVELOPER_WEBSITE","https://www.facebook.com/takeruadelbert");
 
 define("_PRIVATE_DIR", "Asset");
 /**
